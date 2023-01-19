@@ -6,14 +6,14 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 11:32:10 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/18 19:00:18 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/19 19:32:54 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
-# define BUFFER_SIZE 1
+# define BUFFER_SIZE 100
 
 # include <stddef.h>
 # include <stdlib.h>

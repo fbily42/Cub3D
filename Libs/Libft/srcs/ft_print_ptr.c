@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 17:47:24 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/18 18:34:04 by fbily            ###   ########.fr       */
+/*   Updated: 2022/09/20 17:46:40 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,19 @@ int	print_ptr(va_list args)
 	len += print_str("0x");
 	putptr_hexa(ptr);
 	return (len);
+}
+
+int	ptr_size(unsigned long long ptr)
+{
+	int	i;
+
+	i = 0;
+	while (ptr > 0)
+	{
+		ptr = ptr / 16;
+		i++;
+	}
+	return (i);
 }
 
 void	putptr_hexa(unsigned long long nbr)

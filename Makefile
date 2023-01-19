@@ -6,7 +6,7 @@
 #    By: fbily <fbily@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 18:47:35 by fbily             #+#    #+#              #
-#    Updated: 2023/01/18 18:49:00 by fbily            ###   ########.fr        #
+#    Updated: 2023/01/19 15:38:18 by fbily            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,9 +25,9 @@ OBJS	= $(addprefix $(OBJ_PATH), $(OBJ))
 
 DEPS = $(addprefix ${OBJ_PATH}, ${SRC:.c=.d})
 
-INC = -I./includes/ -I./Libs/Libft/includes/ -I./Libs/ft_printf/includes/ -I./Libs/mlx_linux/
+INC = -I./includes/ -I./Libs/Libft/includes/ -I./Libs/mlx_linux/
 
-LIB = -L./Libs/Libft/ -lft -L./Libs/ft_printf/ -lprintf -L./Libs/mlx_linux/ -lmlx -lXext -lX11 -lm -lz
+LIB = -L./Libs/Libft/ -lft -L./Libs/mlx_linux/ -lmlx -lXext -lX11 -lm -lz
 
 CC = cc
 
@@ -48,7 +48,6 @@ all : ${NAME}
 ${NAME} : ${OBJS}
 	make --no-print-directory header
 	@make --no-print-directory -C Libs/Libft
-	@make --no-print-directory -C Libs/ft_printf
 	@make --no-print-directory -C Libs/mlx_linux
 	@${CC} ${CFLAGS} ${OBJS} ${LIB} -o ${NAME}
 	@echo ${CYAN}${BOLD}Compilation ${NC}[${GREEN}OK${NC}]
@@ -58,15 +57,13 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@${CC} ${CFLAGS} ${INC} -o $@ -c $<
 
 clean :
-	@make --no-print-directory $@ -C Libs/Libft
-	@make --no-print-directory $@ -C Libs/ft_printf
-	@make --no-print-directory $@ Libs/mlx_linux
+	@make $@ --no-print-directory -C ./Libs/Libft/
+	@make $@ --no-print-directory -C ./Libs/mlx_linux/
 	@${RM} ${OBJ_PATH}
 	@echo ${CYAN}${BOLD}Objects cleaned${NC}
 
 fclean : clean
-	@make --no-print-directory -C $@ Libs/Libft
-	@make --no-print-directory -C $@ Libs/ft_printf
+	@make $@ --no-print-directory -C ./Libs/Libft/
 	@${RM} ${NAME}
 	@echo ${CYAN}${BOLD}Cleanning ${NC}[${GREEN}OK${NC}]
 

@@ -6,17 +6,22 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:19:16 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/18 19:05:25 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/19 18:52:15 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "libftprintf.h"
-#include "mlx.h"
-#include "stdbool.h"
-#include "limits.h"
-#include <stdio.h>
-#include <errno.h>
+#ifndef CUB3D_H
+# define CUB3D_H
+
+# include "libft.h"
+# include "libftprintf.h"
+# include "mlx.h"
+# include "stdbool.h"
+# include "limits.h"
+# include <stdio.h>
+# include <errno.h>
+
+# define USAGE "Usage : ./cub3d [path_to_map_description]\n"
 
 enum e_ids
 {
@@ -24,36 +29,37 @@ enum e_ids
 	SO,
 	WE,
 	EA,
-    F,
-    C,
+	F,
+	C,
 };
 
 typedef struct s_tex
 {
-    bool            check;
-    void	        *img;
-	int		        width;
-	int		        height;
-    char            *path;
-    unsigned char    colors[3];
-}               t_tex;
+	bool				check;
+	void				*img;
+	int					width;
+	int					height;
+	char				*path;
+	unsigned char		colors[3];
+}				t_tex;
 
 typedef struct s_parser
 {
-    char            **file;
-    char            **map;
-    char            *path_file;
-    int             lines_count;
-    char            orientation;
-    t_tex           textures[6];
-    int             elements_count;
-}               t_parser;
+	char				**file;
+	char				**map;
+	char				*path_file;
+	int					lines_count;
+	char				orientation;
+	t_tex				textures[6];
+	int					elements_count;
+}				t_parser;
 
-/******************************          PARSING.C           ***************************/
-bool    parsing(t_parser *parser);
-bool    check_file(t_parser *parser);
-bool    get_file(t_parser *parser);
+/***************************		PARSING.C		***************************/
+bool	parsing(t_parser *parser);
+bool	check_file(t_parser *parser);
+bool	get_file(t_parser *parser);
 
+#endif
 /* 
 Contraintes :
 
