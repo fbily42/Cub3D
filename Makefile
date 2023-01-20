@@ -6,15 +6,17 @@
 #    By: fbily <fbily@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 18:47:35 by fbily             #+#    #+#              #
-#    Updated: 2023/01/19 15:38:18 by fbily            ###   ########.fr        #
+#    Updated: 2023/01/20 16:40:02 by fbily            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 
 SRC_PATH = ./srcs/
-SRC = main.c \
+SRC = 	main.c \
 		parsing.c \
+		clean.c \
+		file_handler.c \
 
 SRCS = $(addprefix ${SRC_PATH}, ${SRC})
 
@@ -31,7 +33,7 @@ LIB = -L./Libs/Libft/ -lft -L./Libs/mlx_linux/ -lmlx -lXext -lX11 -lm -lz
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror -MMD
+CFLAGS = -Wall -Wextra -Werror -MMD -g3
 
 RM = rm -rf
 
@@ -67,8 +69,8 @@ fclean : clean
 	@${RM} ${NAME}
 	@echo ${CYAN}${BOLD}Cleanning ${NC}[${GREEN}OK${NC}]
 
-debug : fclean
-	@make --no-print-directory CFLAGS+="-g3"
+#debug : fclean
+#	@make --no-print-directory CFLAGS+="-g3"
 
 re : fclean all
 

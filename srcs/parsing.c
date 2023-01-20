@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 18:25:23 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/19 19:29:00 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/20 19:30:35 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ bool	parsing(t_parser *parser)
 	if (check_file(parser) == false)
 		return (false);
 	if (get_file(parser) == false)
+		return (false);
+	if (divide_file(parser) == false)
+		return (false);
+	if (check_textures(parser) == false)
 		return (false);
 	return (true);
 }
@@ -50,58 +54,39 @@ bool	check_file(t_parser *parser)
 	return (true);
 }
 
-int	count_lignes(char *file_path)
-{
-	char	*line;
-	int		fd;
-	int		count;
-
-	count = 0;
-	fd = open(file_path, O_RDONLY);
-	if (fd == -1)
-	{
-		write(STDERR_FILENO, "Error\n", 7);
-		perror("open ");
-		return (-1);
-	}
-	while (42)
-	{
-		line = get_next_line(fd);
-		if (line == NULL)
-			break ;
-		count++;
-		free(line);
-	}
-	close(fd);
-	free(line);
-	return (count);
-}
-
-bool	get_file(t_parser *parser)
+bool	check_textures(t_parser *parser)
 {
 	int	i;
-	int	fd;
 
 	i = 0;
-	parser->lines_count = count_lignes(parser->path_file);
-	if (parser->lines_count == -1)
-		return (false);
-	parser->file = malloc(sizeof(char *) * (parser->lines_count + 1));
-	if (!parser->file)
-		return (ft_printf_fd(STDERR_FILENO, "Error\nMalloc failed.\n"), false);
-	fd = open(parser->path_file, O_RDONLY);
-	if (fd == -1)
+	while (parser->tex_lines[i])
 	{
-		write(STDERR_FILENO, "Error\n", 7);
-		perror("open ");
-		return (false);
-	}
-	while (42)
-	{
-		parser->file[i] = get_next_line(fd);
-		if (parser->file[i] == NULL)
-			break ;
+		if (parser->tex_lines[i][0] == 'N')
+			get_textures(parser, NO, i);
+		else if (parser->tex_lines[i][0] == 'S')
+			get_textures(parser, SO, i);
+		else if (parser->tex_lines[i][0] == 'W')
+			get_textures(parser, WE, i);
+		else if (parser->tex_lines[i][0] == 'E')
+			get_textures(parser, EA, i);
+		else if (parser->tex_lines[i][0] == 'F')
+			get_textures(parser, F, i);
+		else if (parser->tex_lines[i][0] == 'C')
+			get_textures(parser, C, i);
+		else
+			return (false);
 		i++;
 	}
-	return (close(fd), true);
+	return (true);
+}
+
+void	get_textures(t_parser *parser, int id, int index)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	parser->textures[id].path = ft_strdup(parser->tex_lines[index]);
+	parser->textures[id].check = true;
 }

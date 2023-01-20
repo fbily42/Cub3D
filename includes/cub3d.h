@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:19:16 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/19 18:52:15 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/20 16:38:17 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,27 @@ typedef struct s_parser
 {
 	char				**file;
 	char				**map;
+	char				**tex_lines;
 	char				*path_file;
-	int					lines_count;
+	int					file_lines;
+	int					map_lines;
 	char				orientation;
 	t_tex				textures[6];
 	int					elements_count;
 }				t_parser;
 
 /***************************		PARSING.C		***************************/
-bool	parsing(t_parser *parser);
 bool	check_file(t_parser *parser);
+bool	parsing(t_parser *parser);
+
+/***************************	FILE_HANDLER.C		***************************/
+int		count_lignes(char *file_path);
+bool	divide_file(t_parser *parser);
 bool	get_file(t_parser *parser);
+
+/***************************		CLEAN.C		***************************/
+void	print_map(char **map);
+void	free_map(char **map);
 
 #endif
 /* 

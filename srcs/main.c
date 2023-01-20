@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:19:27 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/19 19:30:31 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/20 17:00:57 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,6 @@ void	init_parsing(t_parser *parser, char *argv)
 	}
 }
 
-void	print_map(char **map)
-{
-	int	i;
-
-	i = 0;
-	while (map[i])
-	{
-		printf("%s", map[i]);
-		i++;
-	}
-}
-
-void	free_map(char **map)
-{
-	int	i;
-
-	i = 0;
-	while (map[i])
-		free(map[i++]);
-	free(map);
-}
-
 int	main(int argc, char **argv)
 {
 	t_parser	parser;
@@ -63,7 +41,13 @@ int	main(int argc, char **argv)
 	if (parsing(&parser) == false)
 		return (-1);
 	else
-		print_map(parser.file);
-	free_map(parser.file);
+	{
+		print_map(parser.tex_lines);
+		print_map(parser.map);
+	}
+	free_map(parser.map);
+	free_map(parser.tex_lines);
 	return (0);
 }
+
+// Protection strdup dans divide_file ??
