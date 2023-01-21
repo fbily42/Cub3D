@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/20 16:11:32 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/20 17:09:18 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/21 21:45:21 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,18 +102,18 @@ static bool	get_map(t_parser *parser, int i, int j)
 		else
 			break ;
 	}
-	parser->map_lines = parser->file_lines - i;
-	parser->map = malloc(sizeof(char *) * (parser->map_lines + 1));
-	if (!parser->map)
+	parser->map.map_height = parser->file_lines - i;
+	parser->map.map = malloc(sizeof(char *) * (parser->map.map_height + 1));
+	if (!parser->map.map)
 		return (ft_printf_fd(STDERR_FILENO, "Error\nMalloc failed.\n"), false);
 	j = 0;
 	while (i < parser->file_lines)
 	{
-		parser->map[j] = ft_strdup(parser->file[i]);
+		parser->map.map[j] = ft_strdup(parser->file[i]);
 		i++;
 		j++;
 	}
-	parser->map[j] = NULL;
+	parser->map.map[j] = NULL;
 	return (true);
 }
 

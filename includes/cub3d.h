@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:19:16 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/21 21:16:47 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/21 21:43:49 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,23 @@ typedef struct s_tex
 	unsigned char		colors[3];
 }				t_tex;
 
+typedef struct s_map
+{
+	char				**map;
+	char				orientation;
+	int					map_height;
+	int					map_widht;
+	bool				check_o;
+}				t_map;
+
 typedef struct s_parser
 {
 	char				**file;
-	char				**map;
 	char				**tex_lines;
 	char				*path_file;
 	int					file_lines;
-	int					map_lines;
-	char				orientation;
 	t_tex				textures[6];
-	int					elements_count;
+	t_map				map;
 	void				*mlx;
 }				t_parser;
 

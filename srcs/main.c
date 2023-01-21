@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:19:27 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/21 21:20:25 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/21 21:45:43 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	init_parsing(t_parser *parser, char *argv)
 
 	i = 0;
 	parser->path_file = argv;
-	parser->elements_count = 0;
+	parser->map.check_o = false;
+	parser->map.orientation = '0';
 	while (i <= C)
 	{
 		parser->textures[i].check = false;
@@ -64,9 +65,9 @@ int	main(int argc, char **argv)
 			i++;
 		}
 		printf("\n\n");
-		print_map(parser.map);
+		print_map(parser.map.map);
 	}
-	free_map(parser.map);
+	free_map(parser.map.map);
 	return (0);
 }
 
