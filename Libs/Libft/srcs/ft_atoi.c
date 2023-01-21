@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/10 15:34:18 by fbily             #+#    #+#             */
-/*   Updated: 2022/12/05 16:19:45 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/21 20:49:57 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,64 @@ long	ft_atol(const char *nptr)
 	{
 		nb = nb * 10 + cp_nptr[i] - '0';
 		i++;
+	}
+	return (nb * j);
+}
+
+long long	ft_atoll_capped(const char *nptr, int *flag)
+{
+	int				j;
+	long long		nb;
+
+	if (nptr == NULL)
+		return (0);
+	j = 1;
+	nb = 0;
+	while (*nptr == 32 || (*nptr >= 9 && *nptr <= 13))
+		nptr++;
+	if (*nptr == '-' || *nptr == '+')
+	{
+		if (*nptr == '-')
+			j = -j;
+		nptr++;
+	}
+	while (*nptr >= '0' && *nptr <= '9')
+	{
+		if (j > 0 && (LLONG_MAX - *nptr + '0') / 10 < nb)
+			return (++*flag, 0);
+		if (j < 0 && (LLONG_MAX + *nptr - '0') / 10 > -nb)
+			return (++*flag, 0);
+		nb = nb * 10 + *nptr - '0';
+		nptr++;
+	}
+	return (nb * j);
+}
+
+unsigned char	ft_atouc(const char *nptr, int *flag)
+{
+	int					j;
+	unsigned char		nb;
+
+	if (nptr == NULL)
+		return (0);
+	j = 1;
+	nb = 0;
+	while (*nptr == 32 || (*nptr >= 9 && *nptr <= 13))
+		nptr++;
+	if (*nptr == '-' || *nptr == '+')
+	{
+		if (*nptr == '-')
+			j = -j;
+		nptr++;
+	}
+	while (*nptr >= '0' && *nptr <= '9')
+	{
+		if (j > 0 && (255 - *nptr + '0') / 10 < nb)
+			return (++*flag, 0);
+		if (j < 0 && (255 + *nptr - '0') / 10 > -nb)
+			return (++*flag, 0);
+		nb = nb * 10 + *nptr - '0';
+		nptr++;
 	}
 	return (nb * j);
 }

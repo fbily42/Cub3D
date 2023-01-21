@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:19:27 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/20 17:00:57 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/21 21:20:25 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,18 @@ void	init_parsing(t_parser *parser, char *argv)
 		parser->textures[i].path = NULL;
 		i++;
 	}
+	parser->mlx = mlx_init();
+	if (!parser->mlx)
+	{
+		ft_printf_fd(STDERR_FILENO, "Error\nMlx init failed.\n");
+		exit(1);
+	}
 }
 
 int	main(int argc, char **argv)
 {
 	t_parser	parser;
+	int			i;
 
 	if (argc != 2)
 	{
@@ -42,12 +49,26 @@ int	main(int argc, char **argv)
 		return (-1);
 	else
 	{
-		print_map(parser.tex_lines);
+		i = 0;
+		free_map(parser.tex_lines);
+		while (i < 4)
+		{
+			printf("%p\n", parser.textures[i].img);
+			i++;
+		}
+		while (i < 6)
+		{
+			printf("%d ", parser.textures[i].colors[0]);
+			printf("%d ", parser.textures[i].colors[1]);
+			printf("%d\n", parser.textures[i].colors[2]);
+			i++;
+		}
+		printf("\n\n");
 		print_map(parser.map);
 	}
 	free_map(parser.map);
-	free_map(parser.tex_lines);
 	return (0);
 }
 
 // Protection strdup dans divide_file ??
+// map empty ??

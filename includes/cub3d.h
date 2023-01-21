@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:19:16 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/20 16:38:17 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/21 21:16:47 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@
 # include "libft.h"
 # include "libftprintf.h"
 # include "mlx.h"
-# include "stdbool.h"
-# include "limits.h"
+# include <stdbool.h>
 # include <stdio.h>
 # include <errno.h>
 
@@ -54,9 +53,12 @@ typedef struct s_parser
 	char				orientation;
 	t_tex				textures[6];
 	int					elements_count;
+	void				*mlx;
 }				t_parser;
 
 /***************************		PARSING.C		***************************/
+bool	read_textures(t_parser *parser);
+bool	test_textures(t_parser *parser);
 bool	check_file(t_parser *parser);
 bool	parsing(t_parser *parser);
 
@@ -68,6 +70,18 @@ bool	get_file(t_parser *parser);
 /***************************		CLEAN.C		***************************/
 void	print_map(char **map);
 void	free_map(char **map);
+
+/***************************	COLORS_HANDLER.C	***************************/
+bool	check_convert(t_parser *parser, char *tmp, int id, int k);
+void	get_f(t_parser *parser, int index, int i);
+void	get_c(t_parser *parser, int index, int i);
+bool	convert_colors(t_parser *parser, int id);
+bool	get_colors(t_parser *parser, int index);
+
+/***************************	TEXTURES_HANDLER.C	***************************/
+bool	check_textures(t_parser *parser);
+bool	handle_textures(t_parser *parser, int index);
+void	get_textures(t_parser *parser, int index, int id);
 
 #endif
 /* 
