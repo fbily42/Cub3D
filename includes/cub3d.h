@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:19:16 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/21 21:43:49 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/23 21:12:08 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct s_tex
 	int					height;
 	char				*path;
 	unsigned char		colors[3];
+	unsigned int		hexa_color;
 }				t_tex;
 
 typedef struct s_map
@@ -57,14 +58,15 @@ typedef struct s_parser
 	char				**tex_lines;
 	char				*path_file;
 	int					file_lines;
-	t_tex				textures[6];
 	t_map				map;
+	t_tex				textures[6];
 	void				*mlx;
 }				t_parser;
 
 /***************************		PARSING.C		***************************/
 bool	read_textures(t_parser *parser);
 bool	test_textures(t_parser *parser);
+void	stock_colors(t_parser *parser);
 bool	check_file(t_parser *parser);
 bool	parsing(t_parser *parser);
 
@@ -88,6 +90,14 @@ bool	get_colors(t_parser *parser, int index);
 bool	check_textures(t_parser *parser);
 bool	handle_textures(t_parser *parser, int index);
 void	get_textures(t_parser *parser, int index, int id);
+
+/***************************	PARSING_MAP.C	***************************/
+bool	resize_line(t_parser *parser, int k);
+void	find_max_len(t_parser *parser);
+bool	format_map(t_parser *parser);
+bool	check_map(t_parser *parser);
+bool	parse_map_h(t_parser *parser);
+bool	parse_map_v(t_parser *parser);
 
 #endif
 /* 

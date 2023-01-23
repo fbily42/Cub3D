@@ -6,7 +6,7 @@
 #    By: fbily <fbily@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/23 18:47:35 by fbily             #+#    #+#              #
-#    Updated: 2023/01/21 19:54:04 by fbily            ###   ########.fr        #
+#    Updated: 2023/01/23 18:15:56 by fbily            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,7 @@ SRC = 	main.c \
 		file_handler.c \
 		colors_handler.c \
 		textures_handler.c \
+		parsing_map.c \
 
 SRCS = $(addprefix ${SRC_PATH}, ${SRC})
 

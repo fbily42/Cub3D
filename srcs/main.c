@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 17:19:27 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/21 21:45:43 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/23 18:11:23 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	init_parsing(t_parser *parser, char *argv)
 		parser->textures[i].check = false;
 		parser->textures[i].img = NULL;
 		parser->textures[i].path = NULL;
+		parser->textures[i].hexa_color = 0;
 		i++;
 	}
 	parser->mlx = mlx_init();
@@ -53,17 +54,9 @@ int	main(int argc, char **argv)
 		i = 0;
 		free_map(parser.tex_lines);
 		while (i < 4)
-		{
-			printf("%p\n", parser.textures[i].img);
-			i++;
-		}
+			printf("Mlx img : %p\n", parser.textures[i++].img);
 		while (i < 6)
-		{
-			printf("%d ", parser.textures[i].colors[0]);
-			printf("%d ", parser.textures[i].colors[1]);
-			printf("%d\n", parser.textures[i].colors[2]);
-			i++;
-		}
+			printf("Colors : 0x%x\n", parser.textures[i++].hexa_color);
 		printf("\n\n");
 		print_map(parser.map.map);
 	}

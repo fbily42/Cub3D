@@ -6,7 +6,7 @@
 /*   By: fbily <fbily@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/18 18:25:23 by fbily             #+#    #+#             */
-/*   Updated: 2023/01/21 21:22:30 by fbily            ###   ########.fr       */
+/*   Updated: 2023/01/23 18:12:30 by fbily            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ bool	parsing(t_parser *parser)
 	if (read_textures(parser) == false)
 		return (false);
 	if (test_textures(parser) == false)
+		return (false);
+	stock_colors(parser);
+	if (check_map(parser) == false)
 		return (false);
 	return (true);
 }
@@ -111,4 +114,18 @@ bool	test_textures(t_parser *parser)
 		i++;
 	}
 	return (true);
+}
+
+void	stock_colors(t_parser *parser)
+{
+	int	i;
+
+	i = F;
+	while (i <= C)
+	{
+		parser->textures[i].hexa_color |= parser->textures[i].colors[0] << 16;
+		parser->textures[i].hexa_color |= parser->textures[i].colors[1] << 8;
+		parser->textures[i].hexa_color |= parser->textures[i].colors[2];
+		i++;
+	}
 }
