@@ -5,40 +5,63 @@
 #                                                     +:+ +:+         +:+      #
 #    By: fbily <fbily@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/11/23 18:47:35 by fbily             #+#    #+#              #
-#    Updated: 2023/01/23 18:15:56 by fbily            ###   ########.fr        #
+#    Created: 2022/12/16 10:57:00 by sbeylot           #+#    #+#              #
+#    Updated: 2023/01/25 11:34:00 by sbeylot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = cub3d
+NAME	:=	cub3d
+CC		:=	cc
+CFLAGS	:=	-Wall -Werror -Wextra -MMD -MP -g3
 
-SRC_PATH = ./srcs/
-SRC = 	main.c \
-		parsing.c \
-		clean.c \
-		file_handler.c \
-		colors_handler.c \
-		textures_handler.c \
-		parsing_map.c \
+RM		:=	rm -rf
 
-SRCS = $(addprefix ${SRC_PATH}, ${SRC})
+SRCS_DIR	:=	srcs/
+SRCS_NAME	:=	main.c\
+				raycasting/cub3d.c\
+				raycasting/clean.c\
+				raycasting/init_mlx.c\
+				raycasting/drawing.c\
+				raycasting/draw_line.c\
+				raycasting/ray.c\
+				raycasting/ray_intersection.c\
+				raycasting/raycasting.c\
+				raycasting/player.c\
+				raycasting/event.c\
+				raycasting/utils.c\
+				raycasting/utils2.c\
+				raycasting/door.c\
+				raycasting/door_texture.c\
+				parsing/utils_parsing.c\
+				parsing/file_handler.c\
+				parsing/parsing.c\
+				parsing/parsing_map.c\
+				parsing/textures_handler.c\
+				parsing/colors_handler.c\
+				parsing/parsing_map_utils.c
 
-OBJ_PATH	= obj/
-OBJ = ${SRC:.c=.o}
+SRCS		:=	$(wildcard $(SRCS_DIR)*.c)\
 
-OBJS	= $(addprefix $(OBJ_PATH), $(OBJ))
+OBJS_DIR	:=	objs/
+OBJS_NAME	:=	$(patsubst %.c, %.o, $(SRCS_NAME))
+OBJS		:=	$(addprefix $(OBJS_DIR), $(OBJS_NAME))
 
-DEPS = $(addprefix ${OBJ_PATH}, ${SRC:.c=.d})
+DEPS		:=	$(addprefix	$(OBJS_DIR), $(SRCS_NAME:%.c=%.d))
 
-INC = -I./includes/ -I./Libs/Libft/includes/ -I./Libs/mlx_linux/
+HEADER_DIR	:=	/includes/
+HEADER_NAME	:=	cub3d.h\
+				clean.h\
+				init_mlx.h\
+				drawing.h\
+				player.h\
+				ray.h\
+				event.h\
+				parsing.h\
+				door.h
+HEADER		:=	-I.$(HEADER_DIR)
 
-LIB = -L./Libs/Libft/ -lft -L./Libs/mlx_linux/ -lmlx -lXext -lX11 -lm -lz
-
-CC = cc
-
-CFLAGS = -Wall -Wextra -Werror -MMD -g3
-
-RM = rm -rf
+INCLUDE_LFT	:=	-L./libft -lft
+INCLUDE_MLX	:=	-L./mlx	-lmlx -lXext -lX11 -lm
 
 ############ COLORS ############
 
@@ -48,37 +71,43 @@ BOLD = "\033[1m"
 NC = "\033[0m"
 # NC = No Colors (use for reset)
 
-all : ${NAME}
 
-${NAME} : ${OBJS}
-	make --no-print-directory header
-	@make --no-print-directory -C Libs/Libft
-	@make --no-print-directory -C Libs/mlx_linux
-	@${CC} ${CFLAGS} ${OBJS} ${LIB} -o ${NAME}
+all: $(NAME)
+
+$(NAME):	$(OBJS)
+	make --no-print-directory title 
+	@make --no-print-directory -C ./libft
+	@make --no-print-directory -C ./mlx
+	@$(CC) $(CFLAGS) $(HEADER) $(OBJS) -o $(NAME) $(INCLUDE_LFT) $(INCLUDE_MLX)
 	@echo ${CYAN}${BOLD}Compilation ${NC}[${GREEN}OK${NC}]
 
-$(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	@mkdir -p ${OBJ_PATH}
-	@${CC} ${CFLAGS} ${INC} -o $@ -c $<
+$(OBJS_DIR)%.o: $(SRCS_DIR)%.c
+	@mkdir -p $(OBJS_DIR)
+	@mkdir -p $(OBJS_DIR)raycasting
+	@mkdir -p $(OBJS_DIR)parsing
+	@$(CC) $(CFLAGS) $(HEADER) -c $< -o $@ 
 
-clean :
-	@make $@ --no-print-directory -C ./Libs/Libft/
-	@make $@ --no-print-directory -C ./Libs/mlx_linux/
-	@${RM} ${OBJ_PATH}
+clean:
+	@make $@ --no-print-directory -C ./libft 
+	@make $@ --no-print-directory -C ./mlx
+	@$(RM) $(OBJS_DIR)
 	@echo ${CYAN}${BOLD}Objects cleaned${NC}
 
-fclean : clean
-	@make $@ --no-print-directory -C ./Libs/Libft/
-	@${RM} ${NAME}
+fclean: clean
+	@make $@ --no-print-directory -C ./libft
+	@$(RM) $(NAME)
 	@echo ${CYAN}${BOLD}Cleanning ${NC}[${GREEN}OK${NC}]
 
-#debug : fclean
-#	@make --no-print-directory CFLAGS+="-g3"
+re: fclean all
 
-re : fclean all
+-include $(DEPS)
+
+.SECONDARY: $(OBJS) 
+
+.PHONY: all clean fclean re
 
 #ASCII = ANSI Shadow
-define HEADER
+define TITLE 
 \033[92m
 
  ██████╗██╗   ██╗██████╗ ██████╗ ██████╗ 
@@ -90,14 +119,11 @@ define HEADER
                                          
 \033[0m                                                                                                           
 endef
-export HEADER
+export TITLE
 
-header :
+title :
 	clear
-	@echo "$$HEADER"
+	@echo "$$TITLE"
 
 -include ${DEPS}
 
-.SECONDARY : ${OBJ} ${OBJ_PATH} ${OBJS}
-
-.PHONY : all clean fclean re
