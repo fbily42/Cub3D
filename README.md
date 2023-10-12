@@ -1,7 +1,6 @@
 # Cub3d
 
-Cub3d is a raycastring project. (cf. subject.pdf)
-Done in collaboration with @bCigueS
+Cub3d is a raycastring project done in collaboration with [Simon Beylot](https://github.com/bCigueS) (see subject.pdf)
 ![cub3d 42](/images/cub3d.png)
 
 ## Run
